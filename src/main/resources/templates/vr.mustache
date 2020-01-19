@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="ja">
+	<head>
+		<meta charset="utf-8">
+		<title>Image</title>
+		<meta name="description" content="A-Frame">
+	    <script src="https://aframe.io/releases/1.0.3/aframe.min.js"></script>
+	</head>
+	<body>
+		<a-scene id="scene" timeout="10000">
+			<a-assets>
+				<img id="sky" src="/image/id={{id}}&pass={{pass}}">
+			</a-assets>
+			<a-sky src="#sky" rotation="0 -130 0"></a-sky>
+		</a-scene>
+	</body>
+</html>

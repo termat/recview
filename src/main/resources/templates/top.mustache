@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="ja">
+	<head>
+ 		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<link rel="icon" href="/images/favicon.ico">
+		<title>recview</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.2.2/css/drawer.min.css">
+		<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/iScroll/5.2.0/iscroll.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.2.2/js/drawer.min.js"></script>
+		<style>
+			.imagePreview {
+				width: 100%;
+				height: 100px;
+				background-position: center center;
+				background-size: cover;
+				-webkit-box-shadow: 0 0 1px 1px rgba(0, 0, 0, .3);
+				display: inline-block;
+			}
+			.custom-file {
+				overflow: hidden;
+			}
+			.custom-file-label {
+				white-space: nowrap;
+			}
+			.table td,th {
+				padding: 2px 2px;
+				margin: 1px 1px;
+			}
+		</style>
+		<script>
+			let drawerOpen=function(){
+				$('.drawer').drawer('open');
+			};
+			let select_file=null;
+			$(document).ready(function() {
+				$('.drawer').drawer();
+			});
+			$(document).on('change', ':file', function() {
+				$(this).next('.custom-file-label').html($(this)[0].files[0].name);
+				select_file=$(this)[0].files[0];
+				if (/^image/.test(select_file.type)){
+					var reader = new FileReader();
+					reader.readAsDataURL(select_file);
+					reader.onloadend = function(){
+						$('.imagePreview').css("background-image", "url("+this.result+")");
+					}
+				}
+			});
+			let submit=function(){
+				let data=new FormData();
+				let title=String($("#image_title").val());
+				if(!title){
+					alert("タイトルが設定されていません。");
+					return ;
+				}
+				let pass=String($("#image_pass").val());
+				if(!select_file){
+					alert("ファイルが選択されていません。");
+					return ;
+				}
+				$("#insert_button").empty("");
+				$("#insert_button").html("<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>Loading...");
+				data.append("title",title);
+				data.append("pass",pass);
+				data.append("img",select_file);
+				$.ajax({
+					type:"POST",
+					enctype: 'multipart/form-data',
+					url: "/upload",
+					data: data,
+					processData: false,
+					contentType: false,
+					cache: false,
+					timeout: 600000,
+				}).done(function(data) {
+					$("#insert_button").empty("");
+					$("#insert_button").text("Submit");
+ 					select_file=null;
+ 					location.reload();
+				}).fail(function(data) {
+					alert('エラーが発生しました。');
+					$("#insert_button").empty("");
+					$("#insert_button").text("Submit");
+					select_file=null;
+				});
+			};
+			let showModal=function(){
+				$("#image_title").val("");
+				$("#image_pass").val("");
+				$('.imagePreview').css("background-image", "");
+				$("#fileModal").modal("show");
+			}
+			let showVR=function(id){
+				let pass=$("#pass-"+id).val();
+				let url="/vr/id="+id+"&pass="+pass;
+				window.location.href=url;
+			}
+			let deleteImage=function(id){
+				if(window.confirm("削除しますか？")){
+					let pass=$("#pass-"+id).val();
+					let url="/delete/id="+id+"&pass="+pass;
+					$.get(url,{}, function(data){
+						if(data){
+							location.reload();
+						}
+					});
+				}
+			}
+		</script>
+	</head>
+	<body class="drawer drawer--left">
+	    <div class="container">
+
+
+		<header role="banner">
+    		<nav class="drawer-nav" role="navigation">
+      			<ul class="drawer-menu">
+        			<li><a class="drawer-brand" href="#">Menu</a></li>
+        			<li><a class="drawer-menu-item" href="#" onclick="showModal();">画像新規追加</a></li>
+	 	     	</ul>
+	    	</nav>
+		</header>
+		 <main role="main">
+ 		<nav class="navbar navbar-dark bg-dark">
+			<a class="navbar-brand" href="#" onclick="drawerOpen();"><span class="navbar-toggler-icon"></span> WebVR <span style="font-size:xx-small;"> by A-Frame</span></a>
+		</nav>
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">#</th>
+					<th scope="col">タイトル等</th>
+					<th scope="col" width="200px">画像</th>
+					<th scope="col" colspan="2">　－　</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{#list}}
+					<tr><th scope="row" rowspan="2">{{id}}</th>
+						<td>{{title}}</td>
+						<td rowspan="2"><img src="data:image/jpg;base64,{{thum}}"></td>
+						<td><a role="button" class="btn btn-success btn-sm btn-block" onclick="showVR({{id}});">開く</a></td>
+						<td><a role="button" class="btn btn-warning btn-sm btn-block" onclick="deleteImage({{id}});">削除</a>
+					</tr>
+					<tr>
+						<td><time>{{date}}</time></td>
+						<td colspan="2"><input type="text" width="100%" id="pass-{{id}}" placeholder="Password"style="margin-bottom:4px;"></a>
+					</tr>
+				{{/list}}
+			</tbody>
+		</table>
+
+		<!-- Modal -->
+		<div class="modal fade" id="fileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  			<div class="modal-dialog" role="document">
+    			<div class="modal-content">
+      				<div class="modal-header">
+        				<h5 class="modal-title" id="exampleModalLabel">画像の登録</h5>
+        				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          					<span aria-hidden="true">&times;</span>
+			        	</button>
+					</div>
+					<div class="modal-body">
+						<form action="" method="post" enctype="multipart/form-data" id="data">
+							<input type="text" class="form-control" id="image_title" placeholder="タイトル名" style="margin-bottom:4px;">
+							<input type="text" class="form-control" id="image_pass" placeholder="Password"style="margin-bottom:4px;">
+							<div class="custom-file">
+								<input type="file" class="custom-file-input" accept="image/*" id="customFile" />
+								<label class="custom-file-label" for="customFile" data-browse="参照">選択ファイル...</label>
+							</div>
+							<div class="imagePreview"></div>
+						</form>
+					 </div>
+					<div class="modal-footer">
+						<a class="btn btn-primary" href="#" role="button" onclick="submit();" id="insert_button">Submit</a>
+						<a role="button" class="btn btn-secondary" data-dismiss="modal">Close</a>
+					</div>
+				</div>
+			</div>
+
+	/div>
+		/div>
+ <	main>
+ </div>
+    </body>
+</html>
