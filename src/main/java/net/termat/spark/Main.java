@@ -29,7 +29,7 @@ public class Main {
 			Spark.port(port);
 		});
 		staticFileLocation("/public");
-		get("/top", (request, response) -> {
+		get("/", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             List<ImageData> list=db.getData();
             model.put("list",list);
