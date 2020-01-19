@@ -1,7 +1,6 @@
 package net.termat.spark;
 
 import static spark.Spark.get;
-import static spark.Spark.port;
 import static spark.Spark.post;
 import static spark.Spark.staticFileLocation;
 
@@ -11,19 +10,25 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.imageio.ImageIO;
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.http.Part;
 
 import spark.ModelAndView;
+import spark.Spark;
 import spark.template.mustache.MustacheTemplateEngine;
 public class Main {
 	private static ImageDB db=initDB();
 
 	public static void main(String[] args) {
+		Optional<String> optionalPort = Optional.ofNullable(System.getenv("PORT"));
+		optionalPort.ifPresent(p -> {
+			int port = Integer.parseInt(p);
+			Spark.port(port);
+		});
 		staticFileLocation("/public");
-		port(7042);
 		get("/top", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             List<ImageData> list=db.getData();
