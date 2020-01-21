@@ -33,6 +33,11 @@
 				padding: 2px 2px;
 				margin: 1px 1px;
 			}
+			@media screen and (max-width: 480px) {
+				.main{
+					witdh:480px;
+				}
+			}
 		</style>
 		<script>
 			let drawerOpen=function(){
@@ -116,7 +121,7 @@
 		</script>
 	</head>
 	<body class="drawer drawer--left">
-	    <div class="container" style="width:640px;">
+	    <div class="container main" style="width:640px;">
 		<header role="banner">
     		<nav class="drawer-nav" role="navigation">
       			<ul class="drawer-menu">
