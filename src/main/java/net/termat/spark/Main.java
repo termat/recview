@@ -7,6 +7,7 @@ import static spark.Spark.staticFileLocation;
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.DateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +38,10 @@ public class Main {
 		get("/", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             List<ImageData> list=db.getData();
+            DateFormat df=DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
+            for(ImageData id : list){
+            	id.pass=df.format(id.date);
+            }
             model.put("list",list);
             return new ModelAndView(model, "top.mustache");
         }, new MustacheTemplateEngine());
