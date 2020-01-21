@@ -52,6 +52,24 @@
 				}
 		  }
 
+		  .thum {
+			width: 160px;
+			@media only screen and (min-width: 375px) {
+  				.container {
+			    	width: 100px;
+		 		}
+			}
+			@media
+ 				only screen and (-webkit-min-device-pixel-ratio: 2),
+				only screen and (   min--moz-device-pixel-ratio: 2),
+				only screen and (     -o-min-device-pixel-ratio: 2/1),
+				only screen and (        min-device-pixel-ratio: 2),
+				only screen and (                min-resolution: 326dpi),
+				only screen and (                min-resolution: 2dppx) {
+		    	width: 100px;
+			}
+	    }
+
 		</style>
 		<script>
 			let drawerOpen=function(){
@@ -162,13 +180,13 @@
 				{{#list}}
 					<tr><th scope="row" rowspan="2">{{id}}</th>
 						<td>{{title}}</td>
-						<td rowspan="2" style="width:150px;"><img src="data:image/jpg;base64,{{thum}}" width="150px"></td>
-						<td style="width:65px;"><a role="button" class="btn btn-success btn-sm btn-block" onclick="showVR({{id}});" style="width:65px;">開く</a></td>
-						<td style="width:65px;"><a role="button" class="btn btn-warning btn-sm btn-block" onclick="deleteImage({{id}});" style="width:65px;">削除</a>
+						<td rowspan="2" style="width:150px;"><img src="data:image/jpg;base64,{{thum}}" class="thum"></td>
+						<td style="width:60px;"><a role="button" class="btn btn-success btn-sm btn-block" onclick="showVR({{id}});" style="width:60px;">開く</a></td>
+						<td style="width:60px;"><a role="button" class="btn btn-warning btn-sm btn-block" onclick="deleteImage({{id}});" style="width:60px;">削除</a>
 					</tr>
 					<tr>
 						<td><time>{{date}}</time></td>
-						<td colspan="2"><input type="text" id="pass-{{id}}" placeholder="Password"style="margin-bottom:4px;width:130px;"></a>
+						<td colspan="2"><input type="text" id="pass-{{id}}" placeholder="Password"style="margin-bottom:4px;width:120px;"></a>
 					</tr>
 				{{/list}}
 			</tbody>
