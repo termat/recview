@@ -35,10 +35,10 @@
 			}
 
 			.container {
-				width: 640px;
+				max-width: 640px;
 				@media only screen and (min-width: 375px) {
   					.container {
-				    	width: 375px;
+				    	max-width: 375px;
 			 		}
 				}
 				@media
@@ -48,7 +48,7 @@
 					only screen and (        min-device-pixel-ratio: 2),
 					only screen and (                min-resolution: 326dpi),
 					only screen and (                min-resolution: 2dppx) {
-			    	width: 375px;
+			    	max-width: 375px;
 				}
 		  }
 
@@ -135,7 +135,7 @@
 		</script>
 	</head>
 	<body class="drawer drawer--left">
-	    <div class="container" style="width:640px;">
+	    <div class="container">
 		<header role="banner">
     		<nav class="drawer-nav" role="navigation">
       			<ul class="drawer-menu">
