@@ -48,14 +48,16 @@
 					only screen and (        min-device-pixel-ratio: 2),
 					only screen and (                min-resolution: 326dpi),
 					only screen and (                min-resolution: 2dppx) {
-			    	max-width: 375px;
+  					.container {
+				    	max-width: 375px;
+			 		}
 				}
 		  }
 
 		  .thum {
 			width: 160px;
 			@media only screen and (min-width: 375px) {
-  				.container {
+  				.thum {
 			    	width: 100px;
 		 		}
 			}
@@ -66,7 +68,9 @@
 				only screen and (        min-device-pixel-ratio: 2),
 				only screen and (                min-resolution: 326dpi),
 				only screen and (                min-resolution: 2dppx) {
-		    	width: 100px;
+  				.thum {
+			    	width: 100px;
+		 		}
 			}
 	    }
 
