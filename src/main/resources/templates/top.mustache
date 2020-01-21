@@ -54,11 +54,11 @@
 				}
 		  }
 
-		  .thum {
+		  .thumn {
 			width: 160px;
 			@media only screen and (min-width: 375px) {
-  				.thum {
-			    	width: 100px;
+  				.thumn {
+			    	width: 80px;
 		 		}
 			}
 			@media
@@ -68,8 +68,8 @@
 				only screen and (        min-device-pixel-ratio: 2),
 				only screen and (                min-resolution: 326dpi),
 				only screen and (                min-resolution: 2dppx) {
-  				.thum {
-			    	width: 100px;
+  				.thumn {
+			    	width: 80px;
 		 		}
 			}
 	    }
@@ -184,7 +184,7 @@
 				{{#list}}
 					<tr><th scope="row" rowspan="2">{{id}}</th>
 						<td>{{title}}</td>
-						<td rowspan="2" style="width:150px;"><img src="data:image/jpg;base64,{{thum}}" class="thum"></td>
+						<td rowspan="2" style="width:150px;"><img src="data:image/jpg;base64,{{thum}}" class="thumn"></td>
 						<td style="width:60px;"><a role="button" class="btn btn-success btn-sm btn-block" onclick="showVR({{id}});" style="width:60px;">開く</a></td>
 						<td style="width:60px;"><a role="button" class="btn btn-warning btn-sm btn-block" onclick="deleteImage({{id}});" style="width:60px;">削除</a>
 					</tr>
