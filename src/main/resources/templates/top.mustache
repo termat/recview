@@ -144,12 +144,12 @@
 					<tr><th scope="row" rowspan="2">{{id}}</th>
 						<td>{{title}}</td>
 						<td rowspan="2" style="width:160px;"><img src="data:image/jpg;base64,{{thum}}" width="160px"></td>
-						<td style="width:85px;"><a role="button" class="btn btn-success btn-sm btn-block" onclick="showVR({{id}});" style="width:80px;">開く</a></td>
-						<td style="width:85px;"><a role="button" class="btn btn-warning btn-sm btn-block" onclick="deleteImage({{id}});" style="width:80px;">削除</a>
+						<td style="width:80px;"><a role="button" class="btn btn-success btn-sm btn-block" onclick="showVR({{id}});" style="width:80px;">開く</a></td>
+						<td style="width:80px;"><a role="button" class="btn btn-warning btn-sm btn-block" onclick="deleteImage({{id}});" style="width:80px;">削除</a>
 					</tr>
 					<tr>
 						<td><time>{{date}}</time></td>
-						<td colspan="2"><input type="text" id="pass-{{id}}" placeholder="Password"style="margin-bottom:4px;" style="width;160px;"></a>
+						<td colspan="2" style="width:160px;"><input type="text" id="pass-{{id}}" placeholder="Password"style="margin-bottom:4px;" style="width;160px;"></a>
 					</tr>
 				{{/list}}
 			</tbody>
