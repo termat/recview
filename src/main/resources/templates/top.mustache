@@ -134,8 +134,8 @@
 			<thead>
 				<tr>
 					<th scope="col">#</th>
-					<th scope="col" width="400px">タイトル等</th>
-					<th scope="col" width="160px">画像</th>
+					<th scope="col">タイトル等</th>
+					<th scope="col">画像</th>
 					<th scope="col" colspan="2">　－　</th>
 				</tr>
 			</thead>
@@ -143,7 +143,7 @@
 				{{#list}}
 					<tr><th scope="row" rowspan="2">{{id}}</th>
 						<td>{{title}}</td>
-						<td rowspan="2"><img src="data:image/jpg;base64,{{thum}}"></td>
+						<td rowspan="2"><img src="data:image/jpg;base64,{{thum}}" width="160px"></td>
 						<td><a role="button" class="btn btn-success btn-sm btn-block" onclick="showVR({{id}});">開く</a></td>
 						<td><a role="button" class="btn btn-warning btn-sm btn-block" onclick="deleteImage({{id}});">削除</a>
 					</tr>
