@@ -20,7 +20,6 @@ import spark.ModelAndView;
 import spark.Spark;
 import spark.template.mustache.MustacheTemplateEngine;
 public class Main {
-	private static ImageDB db=initDB();
 
 	public static void main(String[] args) {
 		Optional<String> optionalPort = Optional.ofNullable(System.getenv("PORT"));
@@ -29,6 +28,12 @@ public class Main {
 			Spark.port(port);
 		});
 		staticFileLocation("/public");
+		ImageDB db=new ImageDB();
+		try{
+			db.connectDB("images.db", true);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		get("/", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             List<ImageData> list=db.getData();
@@ -112,16 +117,6 @@ public class Main {
 	    		return false;
     		}
         });
-	}
-
-	private static ImageDB initDB(){
-		ImageDB db=new ImageDB();
-		try{
-			db.connectDB("images.db", true);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return db;
 	}
 
 	private static Map<String,String> paramMap(String param) throws Exception{
