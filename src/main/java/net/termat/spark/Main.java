@@ -39,10 +39,10 @@ public class Main {
                 int port = dbUri.getPort();
                 String host = dbUri.getHost();
                 String path = dbUri.getPath();
- //               String username = (dbUri.getUserInfo() == null) ? null : dbUri.getUserInfo().split(":")[0];
- //               String password = (dbUri.getUserInfo() == null) ? null : dbUri.getUserInfo().split(":")[1];
+                String username = (dbUri.getUserInfo() == null) ? null : dbUri.getUserInfo().split(":")[0];
+                String password = (dbUri.getUserInfo() == null) ? null : dbUri.getUserInfo().split(":")[1];
                 String dbUrl=host + ":" + port + path;
-                db.connectPostgreSql(dbUrl, true,"test","0909123");
+                db.connectPostgreSql(dbUrl, true,username,password);
             }
 		}catch(Exception e){
 			e.printStackTrace();
