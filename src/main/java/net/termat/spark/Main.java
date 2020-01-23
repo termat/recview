@@ -31,7 +31,8 @@ public class Main {
 		staticFileLocation("/public");
 		ImageDB db=new ImageDB();
 		try{
-			db.connectDB("images.db", true);
+//			db.connectSqlite("images.db", true);
+			db.connectPostgreSql("postgres://wjooboprkoqhrv:a5967ddb289414d6d5cc75985b58471b79c342b1d08068da15a7b4d1b16c8fcf@ec2-23-21-13-88.compute-1.amazonaws.com:5432/d1rqlhh428uvsl", true);
 		}catch(Exception e){
 			e.printStackTrace();
 		}

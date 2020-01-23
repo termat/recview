@@ -32,11 +32,27 @@ public class ImageDB {
 	 * @param create DBの自動生成の有無
 	 * @throws SQLException
 	 */
-	public void connectDB(String dbName,boolean create) throws SQLException{
+	public void connectSqlite(String dbName,boolean create) throws SQLException{
 		try{
 			if(!dbName.endsWith(".db"))dbName=dbName+".db";
 			Class.forName("org.sqlite.JDBC");
 			connectionSource = new JdbcConnectionSource("jdbc:sqlite:"+dbName);
+			imgDao= DaoManager.createDao(connectionSource, ImageData.class);
+			if(create)TableUtils.createTableIfNotExists(connectionSource, ImageData.class);
+			srcDao= DaoManager.createDao(connectionSource, ImageSrc.class);
+			if(create)TableUtils.createTableIfNotExists(connectionSource, ImageSrc.class);
+		}catch(SQLException e){
+			e.printStackTrace();
+			throw e;
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+
+	public void connectPostgreSql(String dbUrl,boolean create) throws SQLException{
+		try{
+			Class.forName("org.postgresql.Driver");
+			connectionSource = new JdbcConnectionSource("jdbc:"+dbUrl);
 			imgDao= DaoManager.createDao(connectionSource, ImageData.class);
 			if(create)TableUtils.createTableIfNotExists(connectionSource, ImageData.class);
 			srcDao= DaoManager.createDao(connectionSource, ImageSrc.class);

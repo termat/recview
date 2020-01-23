@@ -55,6 +55,11 @@
 		<artifactId>geogson-core</artifactId>
 		<version>1.2.21</version>
 	</dependency>
+	<dependency>
+		<groupId>org.postgresql</groupId>
+		<artifactId>postgresql</artifactId>
+		<version>42.2.1</version>
+	</dependency>
   </dependencies>
   <build>
   <plugins>
