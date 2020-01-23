@@ -35,7 +35,9 @@ public class Main {
             if (System.getenv("DATABASE_URL") == null) {
     			db.connectSqlite("images.db", true);
             } else {
-                URI dbUri = new URI(System.getenv("DATABASE_URL"));
+            	db.connectSqlite("images.db", true);
+/*
+            	URI dbUri = new URI(System.getenv("DATABASE_URL"));
                 int port = dbUri.getPort();
                 String host = dbUri.getHost();
                 String path = dbUri.getPath();
@@ -43,6 +45,7 @@ public class Main {
                 String password = (dbUri.getUserInfo() == null) ? null : dbUri.getUserInfo().split(":")[1];
                 String dbUrl=host + ":" + port + path;
                 db.connectPostgreSql(dbUrl, true,username,password);
+*/
             }
 		}catch(Exception e){
 			e.printStackTrace();
