@@ -31,9 +31,9 @@ public class Main {
 		staticFileLocation("/public");
 		ImageDB db=new ImageDB();
 		try{
-//			db.connectSqlite("images.db", true);
-			String dbUrl = System.getenv("JDBC_DATABASE_URL");
-			db.connectPostgreSql(dbUrl, true);
+			db.connectSqlite("images.db", true);
+//			String dbUrl = System.getenv("JDBC_DATABASE_URL");
+//			db.connectPostgreSql(dbUrl, true);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
