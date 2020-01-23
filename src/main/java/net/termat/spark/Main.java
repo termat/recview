@@ -7,6 +7,7 @@ import static spark.Spark.staticFileLocation;
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URI;
 import java.text.DateFormat;
 import java.util.HashMap;
 import java.util.List;
@@ -31,12 +32,22 @@ public class Main {
 		staticFileLocation("/public");
 		ImageDB db=new ImageDB();
 		try{
-			db.connectSqlite("images.db", true);
-//			String dbUrl = System.getenv("JDBC_DATABASE_URL");
-//			db.connectPostgreSql(dbUrl, true);
+            if (System.getenv("DATABASE_URL") == null) {
+    			db.connectSqlite("images.db", true);
+            } else {
+                URI dbUri = new URI(System.getenv("DATABASE_URL"));
+                int port = dbUri.getPort();
+                String host = dbUri.getHost();
+                String path = dbUri.getPath();
+ //               String username = (dbUri.getUserInfo() == null) ? null : dbUri.getUserInfo().split(":")[0];
+ //               String password = (dbUri.getUserInfo() == null) ? null : dbUri.getUserInfo().split(":")[1];
+                String dbUrl=host + ":" + port + path;
+                db.connectPostgreSql(dbUrl, true);
+            }
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+
 		get("/", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             List<ImageData> list=db.getData();
