@@ -42,7 +42,7 @@ public class Main {
  //               String username = (dbUri.getUserInfo() == null) ? null : dbUri.getUserInfo().split(":")[0];
  //               String password = (dbUri.getUserInfo() == null) ? null : dbUri.getUserInfo().split(":")[1];
                 String dbUrl=host + ":" + port + path;
-                db.connectPostgreSql(dbUrl, true);
+                db.connectPostgreSql(dbUrl, true,"test","0909123");
             }
 		}catch(Exception e){
 			e.printStackTrace();

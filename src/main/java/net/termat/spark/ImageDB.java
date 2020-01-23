@@ -49,10 +49,10 @@ public class ImageDB {
 		}
 	}
 
-	public void connectPostgreSql(String dbUrl,boolean create) throws SQLException{
+	public void connectPostgreSql(String dbUrl,boolean create,String username, String password) throws SQLException{
 		try{
 			Class.forName("org.postgresql.Driver");
-			connectionSource = new JdbcConnectionSource("jdbc:postgres://"+dbUrl);
+			connectionSource = new JdbcConnectionSource("jdbc:postgres://"+dbUrl,username,password);
 			imgDao= DaoManager.createDao(connectionSource, ImageData.class);
 			if(create)TableUtils.createTableIfNotExists(connectionSource, ImageData.class);
 			srcDao= DaoManager.createDao(connectionSource, ImageSrc.class);
